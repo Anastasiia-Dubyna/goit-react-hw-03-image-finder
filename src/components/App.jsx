@@ -28,13 +28,15 @@ Notify.init({
 
 export class App extends Component {
   state = {
-    isLoading: false,
-    isError: false,
-    searchQuery: '',
-    hits: [],
+    images: [],
+    searchValue: '',
     page: 1,
-    loadMoreBtn: false,
+    toShowLargeImage: '',
+    showModal: false,
+    showLoader: false,
+    showLoadMore: false,
   };
+
   async componentDidUpdate(prevProps, prevState) {
     const { searchValue, page } = this.state;
 
@@ -52,7 +54,7 @@ export class App extends Component {
         });
       } catch (error) {
         this.setState({ showLoadMore: false });
-        // Notify.warning(error.message);
+        Notify.warning(error.message);
       } finally {
         this.setState({ showLoader: false });
       }
@@ -90,6 +92,7 @@ export class App extends Component {
           setAppState={this.setAppState}
           searchValue={this.state.searchValue}
         />
+
         <ImageGallery
           searchValue={searchValue}
           page={page}
